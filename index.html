@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COCOX | Comercializadora y Constructora Xicotépetl S.A. de C.V.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter y Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        cocox: {
+                            dark: '#0A192F',
+                            navy: '#112240',
+                            steel: '#1E3A5F',
+                            blue: '#2563EB',
+                            sky: '#38BDF8',
+                            light: '#F8FAFC',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Textura sutil azul metálico clínico en el Hero */
+        .hero-metallic {
+            background: radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.14) 0%, transparent 45%),
+                        radial-gradient(circle at 15% 85%, rgba(37, 99, 235, 0.18) 0%, transparent 50%),
+                        linear-gradient(135deg, #071120 0%, #0D1F38 48%, #132C4E 100%);
+        }
+        /* Scrollbar estilizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-sky-500 selection:text-white">
+
+    <!-- ==================== BARRA DE NAVEGACIÓN FIJA ==================== -->
+    <header class="fixed top-0 inset-x-0 z-40 bg-[#0A192F]/95 backdrop-blur-md border-b border-slate-800/80 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logotipo Oficial -->
+                <a href="#inicio" class="flex items-center gap-3.5 group">
+                    <div class="w-12 h-12 rounded-xl bg-white p-1 shadow-md overflow-hidden flex items-center justify-center border border-sky-400/30 group-hover:scale-105 transition-transform">
+                        <img src="1000059073.jpg"
+                             alt="Logotipo Oficial COCOX"
+                             class="w-full h-full object-contain rounded-lg"
+                             onerror="this.onerror=null; this.src='https://placehold.co/120x120/0A192F/38BDF8?text=COCOX';">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-display font-extrabold text-xl tracking-tight text-white leading-none">COCOX</span>
+                        <span class="text-[11px] font-medium text-sky-300/90 tracking-wider uppercase mt-1 hidden sm:block">Comercializadora y Constructora Xicotépetl</span>
+                    </div>
+                </a>
+
+                <!-- Menú Desktop -->
+                <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300">
+                    <a href="#nosotros" class="hover:text-sky-400 transition-colors">Nosotros</a>
+                    <a href="#catalogo" class="hover:text-sky-400 transition-colors">Catálogo (+60)</a>
+                    <a href="#infraestructura" class="hover:text-sky-400 transition-colors">Infraestructura y Acabados</a>
+                    <a href="#galeria" class="hover:text-sky-400 transition-colors">Obra Ejecutada</a>
+                    <a href="#contacto" class="hover:text-sky-400 transition-colors">Contacto</a>
+                </nav>
+
+                <!-- Botones de Acción y Cajón Cotizador -->
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleQuoteDrawer(true)" class="relative inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold text-sm shadow-md shadow-sky-500/20 transition-all cursor-pointer">
+                        <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Cotizador</span>
+                        <span id="quote-badge" class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold bg-slate-950 text-sky-400 rounded-full">0</span>
+                    </button>
+
+                    <!-- Botón Menú Móvil -->
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl bg-slate-800/80 text-slate-200 hover:text-white border border-slate-700">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Desplegable Móvil -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-[#0D1F38] border-b border-slate-800 px-4 pt-2 pb-5 space-y-2">
+            <a href="#nosotros" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-slate-200 hover:bg-slate-800 font-medium">Identidad Corporativa</a>
+            <a href="#catalogo" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-slate-200 hover:bg-slate-800 font-medium">Catálogo Clínico y Escolar (+60)</a>
+            <a href="#infraestructura" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-slate-200 hover:bg-slate-800 font-medium">Infraestructura y Pinturas</a>
+            <a href="#galeria" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-slate-200 hover:bg-slate-800 font-medium">Galería Arquitectónica</a>
+            <a href="#contacto" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-slate-200 hover:bg-slate-800 font-medium">Contacto y Ubicación</a>
+        </div>
+    </header>
+
+    <!-- ==================== SECCIÓN HERO PRINCIPAL ==================== -->
+    <section id="inicio" class="hero-metallic pt-28 pb-20 lg:pt-36 lg:pb-28 text-white relative overflow-hidden">
+        <!-- Patrón de cuadrícula técnica sutil -->
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(#38BDF8 1px, transparent 1px), linear-gradient(90deg, #38BDF8 1px, transparent 1px); background-size: 36px 36px;"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Columna Izquierda: Título y Propuesta de Valor -->
+                <div class="lg:col-span-8 space-y-7">
+                    <!-- Badge Razón Social -->
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/70 border border-slate-700/80 text-xs sm:text-sm font-semibold tracking-wide text-slate-200 uppercase">
+                        <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                        COMERCIALIZADORA Y CONSTRUCTORA XICOTÉPETL S.A. DE C.V.
+                    </div>
+
+                    <!-- Título Principal Modificado Exactamente como se solicitó -->
+                    <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-[3.45rem] tracking-tight leading-[1.12] text-white">
+                        Construcción y Equipamiento Integral para
+                        <span class="text-sky-400">Clínicas, Hospitales y Escuelas</span>
+                    </h1>
+
+                    <!-- Subtítulo con barra lateral azul -->
+                    <div class="border-l-4 border-sky-400 pl-4 sm:pl-5 py-1">
+                        <p class="text-lg sm:text-xl font-semibold text-slate-100 leading-snug">
+                            Diseño, construcción, presupuestos, remodelación y equipamiento médico bajo normatividad sanitaria vigente del IMSS-Bienestar y Gobierno Federal.
+                        </p>
+                    </div>
+
+                    <!-- Descripción complementaria -->
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
+                        Desarrollamos espacios de salud y educativos funcionales, seguros y duraderos. Integramos obra civil, acabados asépticos, instalaciones especiales y el suministro completo de mobiliario, instrumental y tecnología médica.
+                    </p>
+
+                    <!-- Botones CTA -->
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <a href="#catalogo" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-sm sm:text-base shadow-lg transition-all">
+                            <i data-lucide="stethoscope" class="w-5 h-5 text-sky-600"></i>
+                            Explorar Catálogo Clínico
+                        </a>
+                        <button onclick="toggleQuoteDrawer(true)" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-slate-900/70 hover:bg-slate-800 text-white font-semibold text-sm sm:text-base border border-slate-600/80 transition-all cursor-pointer">
+                            <i data-lucide="calculator" class="w-5 h-5 text-sky-400"></i>
+                            Solicitar Cotización
+                        </button>
+                    </div>
+
+                    <!-- Indicadores Clave -->
+                    <div class="grid grid-cols-3 gap-4 sm:gap-8 pt-6 border-t border-slate-700/60 max-w-xl">
+                        <div>
+                            <div class="font-display font-extrabold text-2xl sm:text-3xl text-white">+60</div>
+                            <div class="text-xs sm:text-sm text-slate-400 mt-0.5">Equipos y Mobiliario</div>
+                        </div>
+                        <div>
+                            <div class="font-display font-extrabold text-2xl sm:text-3xl text-white">100%</div>
+                            <div class="text-xs sm:text-sm text-slate-400 mt-0.5">Cumplimiento NOM</div>
+                        </div>
+                        <div>
+                            <div class="font-display font-extrabold text-2xl sm:text-3xl text-white">Llave</div>
+                            <div class="text-xs sm:text-sm text-slate-400 mt-0.5">En Mano Integral</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Tarjeta Técnica Flotante -->
+                <div class="lg:col-span-4">
+                    <div class="bg-slate-900/75 backdrop-blur-md border border-slate-700/80 rounded-2xl p-6 shadow-2xl space-y-5">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400">
+                                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-white text-sm">Certificación y Norma</h2>
+                                    <p class="text-xs text-slate-400">Infraestructura Institucional</p>
+                                </div>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 text-xs font-semibold border border-emerald-500/30">Activo</span>
+                        </div>
+
+                        <ul class="space-y-3.5 text-sm text-slate-300">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
+                                <span>Apego estricto a <strong>NOM-016-SSA3</strong> (Infraestructura y equipamiento de hospitales y consultorios).</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
+                                <span>Lineamientos técnicos <strong>IMSS-Bienestar</strong> y obra pública educativa.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
+                                <span>Acabados sanitarios lavables, curva sanitaria y gases medicinales.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
+                                <span>Suministro, instalación, puesta en marcha y capacitación técnica.</span>
+                            </li>
+                        </ul>
+
+                        <div class="pt-2">
+                            <a href="#infraestructura" class="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 font-semibold text-xs border border-sky-400/30 transition-colors">
+                                Ver Paleta Institucional Oficial
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECCIÓN IDENTIDAD CORPORATIVA ==================== -->
+    <section id="nosotros" class="py-20 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold tracking-wider uppercase">
+                        <i data-lucide="building-2" class="w-3.5 h-3.5 text-sky-600"></i>
+                        IDENTIDAD CORPORATIVA
+                    </div>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-slate-900 leading-tight">
+                        Comercializadora y Constructora Xicotépetl S.A. de C.V.
+                    </h2>
+                    <p class="text-slate-600 leading-relaxed text-base">
+                        Somos una empresa mexicana especializada en soluciones integrales de arquitectura sanitaria, obra civil, rehabilitación de planteles educativos y suministro de equipamiento médico e institucional de alta especialidad.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-base">
+                        Desde nuestra sede en Xicotepec de Juárez, Puebla, ejecutamos proyectos llave en mano que garantizan funcionalidad operativa, durabilidad estructural y total cumplimiento normativo para el sector público y privado.
+                    </p>
+                </div>
+
+                <!-- 4 Pilares de Servicio -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-sky-300 hover:shadow-md transition-all">
+                        <div class="w-11 h-11 rounded-xl bg-[#0A192F] text-sky-400 flex items-center justify-center mb-4">
+                            <i data-lucide="compass" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-slate-900 mb-2">Diseño y Presupuestos</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Levantamientos técnicos, anteproyectos arquitectónicos, ingeniería de costos, precios unitarios y catálogos de conceptos ajustados a normatividad vigente.
+                        </p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-sky-300 hover:shadow-md transition-all">
+                        <div class="w-11 h-11 rounded-xl bg-[#0A192F] text-sky-400 flex items-center justify-center mb-4">
+                            <i data-lucide="hard-hat" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-slate-900 mb-2">Obra Civil y Remodelación</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Construcción y adecuación integral de unidades médicas, hospitales, aulas y laboratorios escolares con materiales de grado hospitalario e institucional.
+                        </p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-sky-300 hover:shadow-md transition-all">
+                        <div class="w-11 h-11 rounded-xl bg-[#0A192F] text-sky-400 flex items-center justify-center mb-4">
+                            <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-slate-900 mb-2">Equipamiento Médico</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Suministro de equipo de diagnóstico, quirófano, esterilización, mobiliario clínico, laboratorio e instrumental certificado con garantía de fábrica.
+                        </p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-sky-300 hover:shadow-md transition-all">
+                        <div class="w-11 h-11 rounded-xl bg-[#0A192F] text-sky-400 flex items-center justify-center mb-4">
+                            <i data-lucide="wrench" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-lg text-slate-900 mb-2">Instalaciones Especiales</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Redes de gases medicinales, plantas de emergencia, aire acondicionado filtrado (HEPA), voz y datos, hidrosanitaria y sistemas contra incendio.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CATÁLOGO INTERACTIVO (+60 EQUIPOS) ==================== -->
+    <section id="catalogo" class="py-20 bg-slate-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Encabezado Catálogo -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+                <div>
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-sky-100 text-sky-800 text-xs font-bold tracking-wider uppercase mb-3">
+                        <i data-lucide="package-search" class="w-3.5 h-3.5"></i>
+                        SUMINISTRO INSTITUCIONAL CERTIFICADO
+                    </span>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-slate-900">
+                        Catálogo de Equipamiento Médico e Insumos
+                    </h2>
+                    <p class="text-slate-600 mt-2 max-w-2xl">
+                        Explore nuestro inventario de más de 60 equipos, mobiliario clínico e instrumental. Agregue partidas directamente a su cotizador institucional.
+                    </p>
+                </div>
+
+                <!-- Buscador en Tiempo Real -->
+                <div class="w-full md:w-96">
+                    <label for="catalog-search" class="sr-only">Buscar equipo o clave</label>
+                    <div class="relative">
+                        <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input type="text"
+                               id="catalog-search"
+                               oninput="filterCatalog()"
+                               placeholder="Buscar equipo, clave o especialidad..."
+                               class="w-full pl-11 pr-10 py-3 rounded-xl bg-white border border-slate-300 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 shadow-sm">
+                        <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                            <i data-lucide="x-circle" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtros por Especialidad -->
+            <div id="category-filters" class="flex items-center gap-2 overflow-x-auto pb-4 mb-6">
+                <!-- Generados dinámicamente vía JS -->
+            </div>
+
+            <!-- Contador de resultados -->
+            <div class="flex items-center justify-between text-xs sm:text-sm text-slate-500 mb-6">
+                <span id="catalog-count">Mostrando 64 equipos disponibles</span>
+                <span>Haga clic en <strong>"Ficha Técnica"</strong> para ver especificaciones NOM y cuadro básico</span>
+            </div>
+
+            <!-- Grid de Productos -->
+            <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Generado dinámicamente vía JS -->
+            </div>
+
+            <!-- Estado Vacío -->
+            <div id="catalog-empty" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200">
+                <i data-lucide="search-x" class="w-12 h-12 text-slate-400 mx-auto mb-3"></i>
+                <h3 class="font-bold text-lg text-slate-800">No se encontraron equipos coincidentes</h3>
+                <p class="text-sm text-slate-500 mt-1">Intente con otro término de búsqueda o restablezca el filtro de especialidad.</p>
+                <button onclick="resetFilters()" class="mt-4 px-5 py-2.5 rounded-xl bg-[#0A192F] text-white text-sm font-semibold hover:bg-slate-800 transition-colors">
+                    Mostrar todo el catálogo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECCIÓN INFRAESTRUCTURA Y MUESTRAS DE PINTURA ==================== -->
+    <section id="infraestructura" class="py-20 bg-[#0A192F] text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl mb-12">
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-sky-500/15 border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wider uppercase mb-3">
+                    <i data-lucide="paint-bucket" class="w-3.5 h-3.5"></i>
+                    ESPECIFICACIONES DE ACABADOS OFICIALES
+                </span>
+                <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white">
+                    Infraestructura Sanitaria y Paleta Institucional
+                </h2>
+                <p class="text-slate-300 mt-3 text-base leading-relaxed">
+                    Aplicamos recubrimientos vinil-acrílicos antibacterianos y esmaltes epóxicos de alta resistencia lavable conforme a los manuales de imagen institucional para unidades médicas y planteles educativos.
+                </p>
+            </div>
+
+            <!-- 4 Muestras de Pintura Oficial -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <!-- Muestra 1: Almendra -->
+                <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                    <div class="h-36 w-full relative flex items-end p-4" style="background-color: #EFE6D5;">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900/80 text-white text-xs font-mono font-semibold backdrop-blur-sm">
+                            REF: INST-ALM-01
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-display font-bold text-xl text-white">Almendra</h3>
+                                <span class="text-xs font-mono text-slate-400">#EFE6D5</span>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Tono base institucional para muros interiores de consulta externa, salas de espera, pasillos generales y aulas. Alta reflectancia lumínica y confort visual.
+                            </p>
+                        </div>
+                        <button onclick="addPaintToQuote('Suministro y Aplicación Pintura Vinil-Acrílica Antibacteriana Tono ALMENDRA (m²)')" class="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-slate-950 text-sky-300 text-xs font-semibold border border-slate-700 transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            Cotizar Partida por m²
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Muestra 2: Balmoral -->
+                <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                    <div class="h-36 w-full relative flex items-end p-4" style="background-color: #7A8B99;">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900/80 text-white text-xs font-mono font-semibold backdrop-blur-sm">
+                            REF: INST-BAL-02
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-display font-bold text-xl text-white">Balmoral</h3>
+                                <span class="text-xs font-mono text-slate-400">#7A8B99</span>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Tono gris azulado arquitectónico utilizado en guardapolvos, zoclos de alto tráfico, áreas de imagenología, fachadas y herrería institucional.
+                            </p>
+                        </div>
+                        <button onclick="addPaintToQuote('Suministro y Aplicación Esmalte/Vinílica Lavable Tono BALMORAL (m²)')" class="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-slate-950 text-sky-300 text-xs font-semibold border border-slate-700 transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            Cotizar Partida por m²
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Muestra 3: Sábila -->
+                <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                    <div class="h-36 w-full relative flex items-end p-4" style="background-color: #84A98C;">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900/80 text-white text-xs font-mono font-semibold backdrop-blur-sm">
+                            REF: INST-SAB-03
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-display font-bold text-xl text-white">Sábila</h3>
+                                <span class="text-xs font-mono text-slate-400">#84A98C</span>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Verde clínico reglamentario para áreas quirúrgicas, CEYE, salas de expulsión, curaciones y zonas de hospitalización. Reduce la fatiga ocular del personal.
+                            </p>
+                        </div>
+                        <button onclick="addPaintToQuote('Suministro y Aplicación Recubrimiento Epóxico/Antibacteriano Tono SÁBILA (m²)')" class="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-slate-950 text-sky-300 text-xs font-semibold border border-slate-700 transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            Cotizar Partida por m²
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Muestra 4: Kiosko -->
+                <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                    <div class="h-36 w-full relative flex items-end p-4" style="background-color: #1B4965;">
+                        <span class="px-2.5 py-1 rounded-md bg-slate-900/80 text-white text-xs font-mono font-semibold backdrop-blur-sm">
+                            REF: INST-KIO-04
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-display font-bold text-xl text-white">Kiosko</h3>
+                                <span class="text-xs font-mono text-slate-400">#1B4965</span>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Azul institucional profundo para señalética normativa, franjas de identificación, accesos principales, fachadas exteriores y mobiliario fijo escolar/clínico.
+                            </p>
+                        </div>
+                        <button onclick="addPaintToQuote('Suministro y Aplicación Pintura Institucional Exterior/Interior Tono KIOSKO (m²)')" class="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-slate-950 text-sky-300 text-xs font-semibold border border-slate-700 transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            Cotizar Partida por m²
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Especificaciones Técnicas Adicionales de Obra -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+                <div class="flex items-start gap-3.5">
+                    <div class="p-2.5 rounded-xl bg-sky-500/15 text-sky-400 shrink-0">
+                        <i data-lucide="layers" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Pisos Conductivos y Vinílicos</h4>
+                        <p class="text-xs text-slate-400 mt-1">Rollo vinílico homogéneo termosoldado con curva sanitaria integrada de 10 cm para cero acumulación bacteriana.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3.5">
+                    <div class="p-2.5 rounded-xl bg-sky-500/15 text-sky-400 shrink-0">
+                        <i data-lucide="wind" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Plafones Registrables Lavables</h4>
+                        <p class="text-xs text-slate-400 mt-1">Suspensión de aluminio anodizado con galleta de yeso vinilizado de fácil desinfección y mantenimiento.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3.5">
+                    <div class="p-2.5 rounded-xl bg-sky-500/15 text-sky-400 shrink-0">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Instalación Eléctrica Grado Hospital</h4>
+                        <p class="text-xs text-slate-400 mt-1">Tableros de aislamiento, tierra física independiente y contactos grado médico naranja/rojo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== GALERÍA ARQUITECTÓNICA CON LIGHTBOX ==================== -->
+    <section id="galeria" class="py-20 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+                <div>
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold tracking-wider uppercase mb-3">
+                        <i data-lucide="camera" class="w-3.5 h-3.5 text-sky-600"></i>
+                        PORTAFOLIO DE PROYECTOS
+                    </span>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-slate-900">
+                        Galería Arquitectónica y Equipamiento
+                    </h2>
+                </div>
+                <p class="text-sm text-slate-600 max-w-md">
+                    Haga clic sobre cualquier proyecto para inspeccionar los detalles constructivos y alcances técnicos en pantalla completa.
+                </p>
+            </div>
+
+            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Renderizado por JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECCIÓN CONTACTO Y UBICACIÓN ==================== -->
+    <section id="contacto" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Información Institucional de Contacto -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-sky-100 text-sky-800 text-xs font-bold tracking-wider uppercase mb-3">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                            ATENCIÓN CORPORATIVA
+                        </span>
+                        <h2 class="font-display font-extrabold text-3xl text-slate-900">
+                            Contacto Directo COCOX
+                        </h2>
+                        <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                            Estamos a sus órdenes para visitas técnicas, levantamientos en sitio, licitaciones y cotizaciones de obra y equipamiento en todo el país.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Dirección -->
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl bg-[#0A192F] text-sky-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="navigation" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-sm">Oficinas Centrales</h3>
+                                <p class="text-sm text-slate-600 mt-0.5">Boulevard Benito Juárez 238, Xicotepec de Juárez, Puebla.</p>
+                            </div>
+                        </div>
+
+                        <!-- Teléfonos -->
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl bg-[#0A192F] text-sky-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="phone-call" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-sm">Líneas Telefónicas y WhatsApp</h3>
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-2 mt-1 text-sm font-semibold text-sky-700">
+                                    <a href="tel:7751634263" class="hover:underline">775 163 42 63</a>
+                                    <span class="hidden sm:inline text-slate-300">|</span>
+                                    <a href="tel:7641037809" class="hover:underline">764 103 78 09</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Correo Único -->
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-xl bg-[#0A192F] text-sky-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h3 class="font-bold text-slate-900 text-sm">Correo Electrónico Institucional</h3>
+                                <div class="flex items-center justify-between gap-2 mt-1">
+                                    <a href="mailto:conscomxicotec@outlook.com" class="text-sm font-semibold text-sky-700 hover:underline truncate">
+                                        conscomxicotec@outlook.com
+                                    </a>
+                                    <button onclick="copyEmail()" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold shrink-0 transition-colors cursor-pointer">
+                                        Copiar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario Rápido de Solicitud de Proyecto -->
+                <div class="lg:col-span-7">
+                    <form onsubmit="submitContactForm(event)" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-5">
+                        <h3 class="font-display font-bold text-xl text-slate-900">Solicitar Atención de Ingeniería y Ventas</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Nombre Completo *</label>
+                                <input type="text" id="contact-name" required placeholder="Ej. Ing. Carlos Mendoza" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Institución / Dependencia *</label>
+                                <input type="text" id="contact-org" required placeholder="Clínica, Hospital, Escuela o Empresa" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Teléfono de Contacto *</label>
+                                <input type="tel" id="contact-phone" required placeholder="10 dígitos" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Tipo de Requerimiento</label>
+                                <select id="contact-type" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none">
+                                    <option value="Construcción y Remodelación Integral">Construcción y Remodelación Integral</option>
+                                    <option value="Equipamiento Médico y Hospitalario">Equipamiento Médico y Hospitalario</option>
+                                    <option value="Infraestructura y Mobiliario Escolar">Infraestructura y Mobiliario Escolar</option>
+                                    <option value="Proyecto Llave en Mano (Obra + Equipo)">Proyecto Llave en Mano (Obra + Equipo)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Descripción del Proyecto o Partidas Requeridas *</label>
+                            <textarea id="contact-msg" rows="3" required placeholder="Indique ubicación del proyecto, metros cuadrados aproximados o listado de equipos..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"></textarea>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+                            <span class="text-xs text-slate-500">Envío directo a <strong>conscomxicotec@outlook.com</strong></span>
+                            <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0A192F] hover:bg-slate-800 text-white font-semibold text-sm shadow-md transition-all cursor-pointer">
+                                <i data-lucide="send" class="w-4 h-4 text-sky-400"></i>
+                                Enviar Solicitud
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER INSTITUCIONAL ==================== -->
+    <footer class="bg-[#071120] text-slate-400 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-8 border-b border-slate-800/80">
+                <div class="flex items-center gap-3.5">
+                    <img src="1000059073.jpg"
+                         alt="Logo COCOX"
+                         class="w-11 h-11 rounded-xl bg-white p-1 object-contain"
+                         onerror="this.onerror=null; this.src='https://placehold.co/100x100/0A192F/38BDF8?text=COCOX';">
+                    <div>
+                        <div class="font-display font-bold text-white text-base">Comercializadora y Constructora Xicotépetl S.A. de C.V.</div>
+                        <div class="text-xs text-slate-400 mt-0.5">Boulevard Benito Juárez 238, Xicotepec de Juárez, Puebla.</div>
+                    </div>
+                </div>
+                <div class="text-xs sm:text-sm space-y-1 md:text-right">
+                    <div>Tel: <span class="text-slate-200 font-medium">775 163 42 63 / 764 103 78 09</span></div>
+                    <div>Correo: <a href="mailto:conscomxicotec@outlook.com" class="text-sky-400 hover:underline">conscomxicotec@outlook.com</a></div>
+                </div>
+            </div>
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>© 2026 Comercializadora y Constructora Xicotépetl S.A. de C.V. (COCOX). Todos los derechos reservados.</p>
+                <p>Construcción y Equipamiento Integral para Clínicas, Hospitales y Escuelas.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MODAL DE FICHA TÉCNICA ==================== -->
+    <div id="spec-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/75 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden animate-fadeIn">
+            <div class="bg-[#0A192F] px-6 py-4 flex items-center justify-between text-white">
+                <div class="flex items-center gap-2.5">
+                    <span id="modal-code" class="px-2.5 py-1 rounded-md bg-sky-500/20 border border-sky-400/40 text-sky-300 font-mono text-xs font-bold">CLV-000</span>
+                    <span id="modal-category" class="text-xs text-slate-300 font-medium">Especialidad</span>
+                </div>
+                <button onclick="closeSpecModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-5 max-h-[80vh] overflow-y-auto">
+                <div>
+                    <h3 id="modal-title" class="font-display font-extrabold text-2xl text-slate-900">Nombre del Equipo</h3>
+                    <p id="modal-desc" class="text-sm text-slate-600 mt-2 leading-relaxed">Descripción técnica detallada.</p>
+                </div>
+
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                        <i data-lucide="file-check-2" class="w-4 h-4 text-sky-600"></i>
+                        Especificaciones Técnicas y Normatividad
+                    </h4>
+                    <ul id="modal-specs" class="space-y-2 text-sm text-slate-700">
+                        <!-- Lista generada dinámicamente -->
+                    </ul>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div class="p-3 rounded-xl bg-sky-50 border border-sky-100">
+                        <span class="text-sky-800 font-bold block">Norma Aplicable</span>
+                        <span id="modal-norm" class="text-slate-700 mt-0.5 block">NOM-016-SSA3 / COFEPRIS</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-100">
+                        <span class="text-emerald-800 font-bold block">Disponibilidad y Garantía</span>
+                        <span class="text-slate-700 mt-0.5 block">Suministro e instalación con póliza de 12 meses</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex items-center justify-end gap-3">
+                <button onclick="closeSpecModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-sm font-semibold hover:bg-slate-100 transition-colors cursor-pointer">
+                    Cerrar
+                </button>
+                <button id="modal-add-btn" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0A192F] hover:bg-slate-800 text-white text-sm font-semibold shadow-sm transition-colors cursor-pointer">
+                    <i data-lucide="plus-circle" class="w-4 h-4 text-sky-400"></i>
+                    Agregar a Cotización
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== LIGHTBOX GALERÍA ARQUITECTÓNICA ==================== -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/90 backdrop-blur-md p-4">
+        <div class="max-w-4xl w-full bg-slate-900 rounded-2xl border border-slate-700 overflow-hidden shadow-2xl">
+            <div class="relative">
+                <img id="lightbox-img" src="" alt="Vista ampliada" class="w-full max-h-[65vh] object-cover">
+                <button onclick="closeLightbox()" class="absolute top-4 right-4 p-2.5 rounded-full bg-slate-950/80 text-white hover:bg-sky-500 hover:text-slate-950 transition-colors cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <span id="lightbox-tag" class="text-xs font-bold uppercase tracking-wider text-sky-400">Obra Institucional</span>
+                    <h3 id="lightbox-title" class="font-display font-bold text-xl text-white mt-1">Título del Proyecto</h3>
+                    <p id="lightbox-desc" class="text-sm text-slate-300 mt-1">Descripción arquitectónica.</p>
+                </div>
+                <button onclick="closeLightbox(); toggleQuoteDrawer(true);" class="px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs shrink-0 transition-colors cursor-pointer">
+                    Cotizar Proyecto Similar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CAJÓN LATERAL DE COTIZACIÓN ==================== -->
+    <div id="quote-drawer-backdrop" onclick="toggleQuoteDrawer(false)" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-xs transition-opacity"></div>
+    <aside id="quote-drawer" class="fixed top-0 right-0 z-50 h-full w-full max-w-md bg-white shadow-2xl border-l border-slate-200 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Cabecera Cajón -->
+        <div class="bg-[#0A192F] text-white px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-400">
+                    <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="font-display font-bold text-base">Cotizador Institucional</h3>
+                    <p class="text-xs text-slate-400">COCOX • Requisición de Partidas</p>
+                </div>
+            </div>
+            <button onclick="toggleQuoteDrawer(false)" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- Datos del Solicitante en Cajón -->
+        <div class="px-6 py-3.5 bg-slate-50 border-b border-slate-200 space-y-2.5">
+            <input type="text" id="quote-client-name" placeholder="Nombre de la Institución / Clínica / Escuela" class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-none">
+            <input type="text" id="quote-client-location" placeholder="Municipio y Estado del Proyecto" class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-none">
+        </div>
+
+        <!-- Lista de Partidas Agregadas -->
+        <div id="quote-items-list" class="flex-1 overflow-y-auto p-6 space-y-3">
+            <!-- Dinámico -->
+        </div>
+
+        <!-- Pie de Cajón: Descarga .TXT y Envío por WhatsApp -->
+        <div class="p-5 bg-slate-50 border-t border-slate-200 space-y-3">
+            <div class="flex items-center justify-between text-xs text-slate-600">
+                <span>Total de partidas seleccionadas:</span>
+                <span id="quote-total-units" class="font-bold text-slate-900 text-sm">0 unidades</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <button onclick="downloadQuoteTxt()" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition-colors cursor-pointer">
+                    <i data-lucide="file-down" class="w-4 h-4 text-sky-400"></i>
+                    Descargar .TXT
+                </button>
+                <button onclick="sendQuoteWhatsApp()" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs shadow-sm transition-colors cursor-pointer">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    Enviar WhatsApp
+                </button>
+            </div>
+            <button onclick="clearQuote()" class="w-full text-center text-xs text-slate-400 hover:text-rose-600 pt-1 transition-colors cursor-pointer">
+                Vaciar lista de cotización
+            </button>
+        </div>
+    </aside>
+
+    <!-- ==================== NOTIFICACIÓN TOAST ==================== -->
+    <div id="toast-box" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-2.5 px-4 py-3 rounded-xl bg-slate-900 text-white text-xs sm:text-sm font-medium shadow-xl border border-slate-700">
+        <i data-lucide="check-circle" class="w-4 h-4 text-sky-400 shrink-0"></i>
+        <span id="toast-msg">Acción completada</span>
+    </div>
+
+    <!-- ==================== LÓGICA JAVASCRIPT ==================== -->
+    <script>
+        // Base de datos completa de +60 equipos médicos, mobiliario clínico, escolar e insumos
+        const catalogData = [
+            // 1. Consulta Externa y Exploración (10)
+            { id: "CX-001", name: "Mesa de Exploración Universal", category: "Consulta Externa", norm: "NOM-016-SSA3", desc: "Mesa de exploración fabricada en lámina de acero calibre 20 con acabado esmaltado, respaldo abatible, pierneras y taloneras.", specs: ["Dimensiones: 185 x 60 x 80 cm", "Tapiz vinílico lavable antibacteriano", "Sangradera integrada en acero inoxidable", "Incluye porta rollo de papel"] },
+            { id: "CX-002", name: "Báscula Clínica con Estadímetro", category: "Consulta Externa", norm: "NOM-010-SCFI", desc: "Báscula mecánica de plataforma antiderrapante con barra de doble lectura en kg y tallímetro telescópico.", specs: ["Capacidad máxima: 200 kg / 100 g", "Rango de estadímetro: 75 a 200 cm", "Acabado en pintura electrostática horneada"] },
+            { id: "CX-003", name: "Estuche de Diagnóstico Completo LED", category: "Consulta Externa", norm: "COFEPRIS", desc: "Set de otoscopio y oftalmoscopio con iluminación LED de fibra óptica, mango recargable y espéculos reutilizables.", specs: ["Iluminación blanca fría 4000K", "5 aperturas en oftalmoscopio", "Estuche rígido de transporte"] },
+            { id: "CX-004", name: "Baumanómetro Aneroide de Pedestal", category: "Consulta Externa", norm: "ISO 81060", desc: "Esfigmomanómetro clínico con carátula luminiscente de 6 pulgadas, canastilla porta brazalete y base rodable.", specs: ["Rango de medición: 0 - 300 mmHg", "Brazalete adulto libre de látex", "Base de 5 ruedas con freno"] },
+            { id: "CX-005", name: "Lámpara de Exploración Chicote LED", category: "Consulta Externa", norm: "IEC 60601", desc: "Lámpara auxiliar rodable con cuello de ganso flexible y cabezal LED de baja emisión térmica.", specs: ["Intensidad: 35,000 Lux a 50 cm", "Base de 5 apoyos estabilizada", "Vida útil LED > 50,000 horas"] },
+            { id: "CX-006", name: "Negatoscopio LED Doble Campo", category: "Consulta Externa", norm: "NOM-229-SSA1", desc: "Visualizador radiográfico ultradelgado con encendido instantáneo libre de parpadeo y sujeción automática de placas.", specs: ["Pantalla acrílica opalina 72 x 43 cm", "Regulador digital de luminosidad", "Gabinete en aluminio anodizado"] },
+            { id: "CX-007", name: "Banqueta de Altura Giratoria", category: "Consulta Externa", norm: "NOM-016-SSA3", desc: "Banco giratorio con asiento acojinado en vinil clínico, pistón neumático y aro descansapiés cromado.", specs: ["Altura ajustable: 48 a 62 cm", "Base de 5 estrellas cromada", "Soporta hasta 130 kg"] },
+            { id: "CX-008", name: "Banqueta de Altura de 2 Peldaños", category: "Consulta Externa", norm: "NOM-016-SSA3", desc: "Escalerilla auxiliar de dos escalones con estructura tubular cromada y huellas de hule antiderrapante.", specs: ["Tubo de acero cal. 18 cromado", "Regatones de goma de alta adherencia", "Dimensiones: 42 x 38 x 34 cm"] },
+            { id: "CX-009", name: "Estetoscopio Clínico Doble Campana", category: "Consulta Externa", norm: "ISO 13485", desc: "Estetoscopio acústico de acero inoxidable con membrana dual para frecuencias altas y bajas.", specs: ["Olivas blandas de sellado hermético", "Tubo libre de látex de 70 cm", "Anillo quita frío en campana"] },
+            { id: "CX-010", name: "Báscula Pediátrica Digital", category: "Consulta Externa", norm: "NOM-010-SCFI", desc: "Báscula electrónica pesa bebés con charola anatómica desmontable y pantalla LCD de alto contraste.", specs: ["Capacidad: 20 kg / división 5 g", "Función Tara y retención de peso", "Alimentación dual CA / baterías"] },
+
+            // 2. Quirófano y Cirugía (10)
+            { id: "QR-011", name: "Mesa Quirúrgica Electrohidráulica", category: "Quirófano", norm: "IEC 60601-2-46", desc: "Mesa de operaciones universal radiotransparente con movimientos electrohidráulicos mediante control remoto.", specs: ["Capacidad de carga: 250 kg", "Posiciones Trendelenburg, lateral y renal", "Colchoneta viscoelástica antiestática"] },
+            { id: "QR-012", name: "Lámpara Quirúrgica Doble Satélite LED", category: "Quirófano", norm: "IEC 60601-2-41", desc: "Sistema de iluminación quirúrgica de techo sin sombras con ajuste de temperatura de color y diámetro de campo.", specs: ["Iluminación: 160,000 + 140,000 Lux", "Índice IRC > 96", "Mango esterilizable desmontable"] },
+            { id: "QR-013", name: "Máquina de Anestesia con Ventilador", category: "Quirófano", norm: "NOM-006-SSA3", desc: "Estación de anestesia con rotámetros electrónicos, ventilador integrado y monitoreo de gases anestésicos.", specs: ["Modos VCV, PCV, SIMV y Manual", "Batería de respaldo de 120 min", "Incluye vaporizador de Sevoflurano"] },
+            { id: "QR-014", name: "Unidad Electroquirúrgica 300W", category: "Quirófano", norm: "IEC 60601-2-2", desc: "Electrobisturí monopolar y bipolar de alta frecuencia con monitoreo continuo de placa neutra.", specs: ["Corte puro, blend 1/2/3 y coagulación", "Potencia máxima: 300 Watts", "Incluye pedal doble y lápiz reutilizable"] },
+            { id: "QR-015", name: "Mesa de Riñón Acero Inoxidable", category: "Quirófano", norm: "NOM-016-SSA3", desc: "Mesa auxiliar semicircular para instrumental quirúrgico fabricada íntegramente en acero inoxidable AISI 304.", specs: ["Acabado sanitario pulido mate", "Barandal perimetral en cubierta", "Ruedas conductoras de 3 pulgadas"] },
+            { id: "QR-016", name: "Mesa Pasteur Rodable Inoxidable", category: "Quirófano", norm: "NOM-016-SSA3", desc: "Carro auxiliar quirúrgico de dos entrepaños con barandillas protectoras en acero inoxidable grado médico.", specs: ["Dimensiones: 70 x 45 x 85 cm", "Acero inoxidable calibre 18", "Ruedas giratorias silenciosas"] },
+            { id: "QR-017", name: "Mesa Mayo Hidráulica Inoxidable", category: "Quirófano", norm: "NOM-016-SSA3", desc: "Mesa porta instrumental con charola desmontable y ajuste de altura mediante pedal hidráulico.", specs: ["Altura ajustable: 90 a 135 cm", "Base pesada en U para estabilidad", "Charola de 50 x 35 cm"] },
+            { id: "QR-018", name: "Aspirador Quirúrgico Rodable", category: "Quirófano", norm: "ISO 10079-1", desc: "Unidad de succión continua de alto flujo y bajo nivel sonoro con dos frascos recolectores de 3 litros.", specs: ["Vacío máximo: 680 mmHg", "Flujo de aire: 40 L/min", "Válvula de seguridad anti-desbordamiento"] },
+            { id: "QR-019", name: "Cubeta de Patada Acero Inoxidable", category: "Quirófano", norm: "NOM-016-SSA3", desc: "Cubeta cilíndrica desmontable de 12 litros montada en base rodable con aro protector de hule.", specs: ["Acero inoxidable AISI 304", "4 ruedas giratorias de 2 pulgadas", "Parachoques perimetral"] },
+            { id: "QR-020", name: "Torre de Laparoscopia HD", category: "Quirófano", norm: "IEC 60601", desc: "Sistema integral de cirugía mínimamente invasiva con procesador de cámara Full HD, fuente de luz LED e insuflador de CO2.", specs: ["Monitor grado médico de 27 pulgadas", "Insuflador automático de 40 L/min", "Carro móvil con brazo articulado"] },
+
+            // 3. Urgencias y Cuidados Intensivos (9)
+            { id: "UR-021", name: "Monitor de Signos Vitales Multiparámetro", category: "Urgencias y UCI", norm: "IEC 60601-2-49", desc: "Monitor clínico con pantalla táctil de 12.1 pulgadas para ECG, SpO2, PANI, Respiración y Temperatura.", specs: ["Detección de arritmias y segmento ST", "Batería recargable de 4 horas", "Conexión a central de enfermería"] },
+            { id: "UR-022", name: "Desfibrilador Monitor Bifásico", category: "Urgencias y UCI", norm: "IEC 60601-2-4", desc: "Desfibrilador hospitalario con modos DEA, manual, cardioversión sincronizada y marcapasos externo.", specs: ["Energía bifásica de 1 a 360 Joules", "Paletas adulto/pediátrico integradas", "Impresora térmica de 3 canales"] },
+            { id: "UR-023", name: "Carro Rojo de Reanimación Equipado", category: "Urgencias y UCI", norm: "NOM-027-SSA3", desc: "Carro de paro cardiorrespiratorio en polímero ABS de alto impacto con 5 cajones, tabla de RCP y porta tanque.", specs: ["Cierre centralizado con sellos de seguridad", "Soporte para desfibrilador giratorio", "Incluye porta sueros telescópico"] },
+            { id: "UR-024", name: "Ventilador Volumétrico Adulto/Pediátrico", category: "Urgencias y UCI", norm: "ISO 80601-2-12", desc: "Ventilador mecánico de cuidados intensivos con pantalla táctil de 15 pulgadas y modos invasivos y no invasivos.", specs: ["Volumen tidal: 20 a 2000 ml", "Sensor de flujo proximal/distal", "Compresor de aire grado médico"] },
+            { id: "UR-025", name: "Bomba de Infusión Volumétrica", category: "Urgencias y UCI", norm: "IEC 60601-2-24", desc: "Bomba peristáltica lineal programable con librería de fármacos y sensores ultrasónicos de burbujas y oclusión.", specs: ["Rango de flujo: 0.1 a 1200 ml/h", "Compatible con equipos universales", "Apilable en estación de infusión"] },
+            { id: "UR-026", name: "Camilla de Traslado Hidráulica", category: "Urgencias y UCI", norm: "EN 60601-2-52", desc: "Camilla hospitalaria radiotransparente con ajuste hidráulico de altura, Trendelenburg y quinta rueda direccional.", specs: ["Barandales abatibles de seguridad", "Sistema de freno centralizado", "Colchón antiestático de 10 cm"] },
+            { id: "UR-027", name: "Electrocardiógrafo Digital 12 Derivaciones", category: "Urgencias y UCI", norm: "IEC 60601-2-25", desc: "Equipo de ECG de 3/6/12 canales con pantalla a color, interpretación automática y memoria interna.", specs: ["Impresora térmica de alta resolución", "Filtros digitales de línea base y EMG", "Incluye cable paciente y electrodos"] },
+            { id: "UR-028", name: "Oxímetro de Pulso de Mesa", category: "Urgencias y UCI", norm: "ISO 80601-2-61", desc: "Oxímetro clínico de monitoreo continuo con curva pletismográfica y alarmas audibles/visuales programables.", specs: ["Precisión SpO2 ±2% en baja perfusión", "Sensores adulto y pediátrico incluidos", "Batería interna de 8 horas"] },
+            { id: "UR-029", name: "Flujómetro de Oxígeno con Humidificador", category: "Urgencias y UCI", norm: "ISO 15002", desc: "Dosificador de oxígeno medicinal de 0 a 15 L/min con conexión DISS/AGA y vaso humidificador reutilizable.", specs: ["Cuerpo de latón cromado", "Tubo de policarbonato irrompible", "Válvula de alivio de presión"] },
+
+            // 4. Hospitalización y Mobiliario Clínico (9)
+            { id: "HS-030", name: "Cama Hospitalaria Eléctrica 3 Posiciones", category: "Hospitalización", norm: "IEC 60601-2-52", desc: "Cama clínica motorizada con cabecera y piecera desmontables en ABS, barandales divididos y control integrado.", specs: ["Elevación respaldo, rodillas y altura", "Capacidad de carga: 220 kg", "Incluye colchón clínico impermeable"] },
+            { id: "HS-031", name: "Cama Hospitalaria Manual 2 Manivelas", category: "Hospitalización", norm: "NOM-016-SSA3", desc: "Cama clínica mecánica con estructura de acero esmaltado, manivelas retráctiles y barandales de aluminio.", specs: ["Posiciones Fowler y vascular", "Ruedas de 5 pulgadas con freno total", "4 perforaciones para porta sueros"] },
+            { id: "HS-032", name: "Buró Clínico Hospitalario con Mesa", category: "Hospitalización", norm: "NOM-016-SSA3", desc: "Gabinete lateral de hospitalización en lámina esmaltada o polímero ABS con cajón, puerta y mesa abatible.", specs: ["Toallero lateral integrado", "Ruedas ocultas de fácil desplazamiento", "Superficie resistente a desinfectantes"] },
+            { id: "HS-033", name: "Mesa Puente Hospitalaria Ajustable", category: "Hospitalización", norm: "NOM-016-SSA3", desc: "Mesa de alimentación sobre cama con cubierta laminada de alta presión y columna telescópica asistida.", specs: ["Altura regulable: 75 a 110 cm", "Base en H de perfil bajo", "Borde perimetral anti-derrames"] },
+            { id: "HS-034", name: "Porta Sueros Rodable Acero Inoxidable", category: "Hospitalización", norm: "NOM-016-SSA3", desc: "Tripié porta venoclisis de altura variable con 4 ganchos tipo cuerno y base de 5 patas con contrapeso.", specs: ["Altura ajustable: 130 a 215 cm", "Acero inoxidable AISI 304", "Perilla de ajuste ergonómica"] },
+            { id: "HS-035", name: "Biombo Clínico Plegable 3 Hojas", category: "Hospitalización", norm: "NOM-016-SSA3", desc: "Mampara divisoria móvil con estructura tubular cromada y cortinas de tela vinílica lavable ignífuga.", specs: ["Ancho total desplegado: 180 cm", "Altura: 170 cm", "Ruedas giratorias en cada sección"] },
+            { id: "HS-036", name: "Silla de Ruedas Hospitalaria Reforzada", category: "Hospitalización", norm: "ISO 7176", desc: "Silla de ruedas plegable en acero cromado con descansabrazos desmontables y descansapiés abatibles.", specs: ["Ancho de asiento: 46 cm", "Llantas traseras macizas de 24 pulgadas", "Frenos bilaterales de palanca"] },
+            { id: "HS-037", name: "Cuna Térmica Radiante Neonatal", category: "Hospitalización", norm: "IEC 60601-2-21", desc: "Unidad de calor radiante para recién nacidos con servocontrol de temperatura cutánea, fototerapia y báscula.", specs: ["Calefactor cerámico de distribución uniforme", "Paneles laterales abatibles transparentes", "Alarmas visuales y acústicas"] },
+            { id: "HS-038", name: "Incubadora Neonatal de Cuidados", category: "Hospitalización", norm: "IEC 60601-2-19", desc: "Incubadora cerrada con control microprocesado de temperatura de aire y piel, humedad relativa y oxigenoterapia.", specs: ["Cúpula de doble pared con 6 portillos", "Colchón radiotransparente inclinable", "Batería de respaldo para traslado intra-hospitalario"] },
+
+            // 5. Esterilización (CEYE) e Instrumental (8)
+            { id: "CE-039", name: "Autoclave de Vapor Autogenerado 75L", category: "Esterilización e Instrumental", norm: "NOM-016-SSA3", desc: "Esterilizador vertical/horizontal automático en acero inoxidable 316L con ciclos programables para instrumental y ropa.", specs: ["Temperatura de esterilización: 121°C - 134°C", "Válvula de seguridad y manovacuómetro", "Secado automático al finalizar ciclo"] },
+            { id: "CE-040", name: "Autoclave de Mesa Clase B 23 Litros", category: "Esterilización e Instrumental", norm: "EN 13060", desc: "Autoclave con bomba de prevacío fraccionado ideal para clínicas dentales, consultorios y centros de salud.", specs: ["3 ciclos de prevacío y secado al vacío", "Impresora térmica y puerto USB", "Test Bowie & Dick y Helix integrados"] },
+            { id: "CE-041", name: "Selladora Térmica Continua para Bolsas", category: "Esterilización e Instrumental", norm: "ISO 11607", desc: "Selladora rotativa para empaques grado médico papel-polipropileno con control digital de temperatura.", specs: ["Ancho de sellado: 12 mm", "Velocidad de sellado: 10 m/min", "Construcción en acero inoxidable"] },
+            { id: "CE-042", name: "Set de Instrumental Cirugía Menor", category: "Esterilización e Instrumental", norm: "ISO 7153-1", desc: "Juego de 18 piezas en acero inoxidable alemán con charola Mayo con tapa para curaciones y suturas.", specs: ["Porta agujas Mayo-Hegar, pinzas Kelly y mosquito", "Tijeras Metzenbaum y Mayo recta/curva", "Mango de bisturí No. 3 y 4"] },
+            { id: "CE-043", name: "Set de Atención de Parto Estéril", category: "Esterilización e Instrumental", norm: "NOM-007-SSA2", desc: "Equipo completo de instrumental obstétrico en acero inoxidable quirúrgico con estuche esterilizable.", specs: ["Pinzas Rochester-Pean y Forester", "Tijera de episiotomía Braun-Stadler", "Riñón y flanera en acero inoxidable"] },
+            { id: "CE-044", name: "Tarja Doble Escurridor Acero Inoxidable", category: "Esterilización e Instrumental", norm: "NOM-016-SSA3", desc: "Fregadero industrial sanitario calibre 16 para lavado de instrumental en CEYE con respaldo perimetral.", specs: ["Acero inoxidable AISI 304 sanitario", "Patas tubulares con regatones niveladores", "Incluye contracanastas y cespol"] },
+            { id: "CE-045", name: "Anaquel Esqueleto Acero Inoxidable", category: "Esterilización e Instrumental", norm: "NOM-016-SSA3", desc: "Estantería sanitaria de 5 entrepaños lisos o ranurados para guarda de material estéril e insumos.", specs: ["Dimensiones: 90 x 45 x 180 cm", "Capacidad de carga: 80 kg por nivel", "Fácil limpieza y desinfección"] },
+            { id: "CE-046", name: "Vitrina Clínica Doble Puerta", category: "Esterilización e Instrumental", norm: "NOM-016-SSA3", desc: "Gabinete guarda medicamentos e instrumental con puertas superiores de cristal y entrepaños ajustables.", specs: ["Fabricada en lámina cal. 20 o acero inox", "Cerradura con llave de seguridad", "Dimensiones: 85 x 40 x 165 cm"] },
+
+            // 6. Laboratorio Clínico e Imagenología (7)
+            { id: "LB-047", name: "Microscopio Binocular Óptica Infinita", category: "Laboratorio e Imagen", norm: "ISO 13485", desc: "Microscopio de laboratorio clínico con objetivos planacromáticos 4x, 10x, 40x y 100x inmersión.", specs: ["Iluminación LED Köhler regulable", "Platina mecánica de doble capa", "Cabezal binocular inclinado 30°"] },
+            { id: "LB-048", name: "Centrífuga Clínica de Mesa 12 Tubos", category: "Laboratorio e Imagen", norm: "IEC 61010-2-020", desc: "Centrífuga digital silenciosa con rotor angular para tubos de 10/15 ml y cierre electrónico de tapa.", specs: ["Velocidad ajustable hasta 4,000 RPM", "Temporizador digital de 1 a 99 min", "Motor libre de escobillas"] },
+            { id: "LB-049", name: "Refrigerador para Banco de Sangre / Vacunas", category: "Laboratorio e Imagen", norm: "NOM-036-SSA2", desc: "Refrigerador biomédico vertical con control preciso de 2°C a 8°C, graficador y alarma por falla eléctrica.", specs: ["Puerta de doble cristal templado", "Deshielo automático y circulación forzada", "Registrador de temperatura USB"] },
+            { id: "LB-050", name: "Analizador de Química Sanguínea Semiautomático", category: "Laboratorio e Imagen", norm: "COFEPRIS", desc: "Fotómetro clínico abierto con celda de flujo de cuarzo, pantalla táctil y 7 filtros de interferencia.", specs: ["Longitudes de onda: 340 a 670 nm", "Incubadora integrada a 37°C", "Almacena hasta 10,000 resultados"] },
+            { id: "LB-051", name: "Ultrasonido Doppler Color Portátil", category: "Laboratorio e Imagen", norm: "IEC 60601-2-37", desc: "Ecógrafo diagnóstico multipropósito con transductores convexo y lineal para ginecología, abdomen y vascular.", specs: ["Monitor LED de 15 pulgadas de alta definición", "Modos B, M, Doppler Color, PW y Power", "2 puertos activos para transductores"] },
+            { id: "LB-052", name: "Equipo de Rayos X Rodable Digital", category: "Laboratorio e Imagen", norm: "NOM-229-SSA1", desc: "Unidad radiográfica móvil de alta frecuencia con brazo articulado para toma de placas en cama o urgencias.", specs: ["Generador de 32 kW / 125 kVp", "Colimador luminoso con temporizador", "Compatible con detector plano DR"] },
+            { id: "LB-053", name: "Silla Toma de Muestras Sanguíneas", category: "Laboratorio e Imagen", norm: "NOM-016-SSA3", desc: "Sillón de flebotomía ergonómico con ambos descansabrazos acolchados ajustables en altura e inclinación.", specs: ["Tapiz vinílico lavable sin costuras", "Estructura tubular de acero reforzado", "Gaveta inferior porta insumos"] },
+
+            // 7. Odontología y Rehabilitación (5)
+            { id: "OD-054", name: "Unidad Dental Hidráulica Completa", category: "Odontología y Rehabilitación", norm: "ISO 7494", desc: "Sillón odontológico electromecánico con escupidera cerámica giratoria, lámpara LED con sensor y módulo neumático.", specs: ["3 salidas para piezas de mano + jeringa triple", "Eyector de saliva y succión quirúrgica", "Incluye banquillo odontológico"] },
+            { id: "OD-055", name: "Compresor Dental Libre de Aceite", category: "Odontología y Rehabilitación", norm: "ISO 8573-1", desc: "Compresor silencioso grado médico con tanque interno recubierto anticorrosión y filtro coalescente.", specs: ["Motor de 1.5 HP / Tanque 40 Litros", "Nivel de ruido < 58 dB", "Aire seco y libre de impurezas"] },
+            { id: "OD-056", name: "Equipo de Rayos X Dental de Pared", category: "Odontología y Rehabilitación", norm: "NOM-229-SSA1", desc: "Equipo radiográfico periapical de alta frecuencia con brazo pantográfico estable y disparador remoto.", specs: ["Tubo de 70 kV / 8 mA", "Modo digital compatible con radiovisiógrafo", "Baja radiación dispersa"] },
+            { id: "OD-057", name: "Equipo de Electroterapia y Ultrasonido", category: "Odontología y Rehabilitación", norm: "IEC 60601-2-5", desc: "Unidad combinada de fisioterapia con corrientes TENS, EMS, interferenciales y ultrasonido de 1 y 3 MHz.", specs: ["2 canales independientes de electroterapia", "Cabezal multifrecuencia ergonómico", "Protocolos clínicos preprogramados"] },
+            { id: "OD-058", name: "Mesa de Tratamiento para Fisioterapia", category: "Odontología y Rehabilitación", norm: "NOM-016-SSA3", desc: "Camilla fija reforzada para rehabilitación física con orificio facial y entrepaño inferior.", specs: ["Dimensiones: 190 x 70 x 75 cm", "Espuma de alta densidad indeformable", "Estructura metálica esmaltada"] },
+
+            // 8. Equipamiento Escolar e Institucional (6)
+            { id: "ES-059", name: "Pupitre Binario Escolar Reforzado", category: "Equipamiento Escolar", norm: "NMX-R-021-SCFI", desc: "Mesa y sillas escolares ergonómicas fabricadas en perfil tubular de acero y cubierta de polipropileno o melamina.", specs: ["Parrilla inferior portalibros", "Pintura electrostática horneada", "Nivel primaria, secundaria y media superior"] },
+            { id: "ES-060", name: "Pizarrón Blanco Porcelanizado 240x120", category: "Equipamiento Escolar", norm: "INIFED", desc: "Pizarrón magnético de superficie vitrificada de alta durabilidad con marco de aluminio y porta plumones.", specs: ["Dimensiones: 2.40 x 1.20 metros", "Garantía de borrado en seco sin sombras", "Kit de fijación oculta incluido"] },
+            { id: "ES-061", name: "Mesa de Laboratorio Escolar con Tarja", category: "Equipamiento Escolar", norm: "INIFED", desc: "Mesa central para laboratorio de ciencias con cubierta fenólica resistente a ácidos, tarja y tomas de gas/agua.", specs: ["Dimensiones: 240 x 120 x 90 cm", "Cubierta antiácida grado laboratorio", "Incluye cuello de ganso y torreta de gas"] },
+            { id: "ES-062", name: "Escritorio Magisterial con Silla", category: "Equipamiento Escolar", norm: "INIFED", desc: "Escritorio para docente en estructura metálica calibre 18 con pedestal de 2 cajones y silla apilable.", specs: ["Cubierta de 120 x 60 cm", "Cerradura de seguridad en cajonera", "Acabado institucional gris/almendra"] },
+            { id: "ES-063", name: "Botiquín Primeros Auxilios Escolar/Clínico", category: "Equipamiento Escolar", norm: "NOM-005-STPS", desc: "Gabinete metálico mural con cerradura y dotación completa de material de curación conforme a Protección Civil.", specs: ["Incluye gasas, vendas, antisépticos y férulas", "Señalización normativa de cruz verde", "Dimensiones: 45 x 35 x 15 cm"] },
+            { id: "ES-064", name: "Contenedor RPBI y Residuos Sanitarios", category: "Equipamiento Escolar", norm: "NOM-087-ECOL", desc: "Set de contenedores rígidos de polipropileno con pedal para separación de residuos peligrosos biológico-infecciosos.", specs: ["Capacidad 30L y 60L en color rojo/amarillo", "Símbolo universal de riesgo biológico", "Tapa hermética accionada por pedal"] }
+        ];
+
+        // Galería Arquitectónica
+        const galleryItems = [
+            {
+                title: "Unidad de Consulta Externa y Medicina General",
+                tag: "Construcción y Acabados",
+                desc: "Aplicación de paleta institucional Almendra y Balmoral, pisos vinílicos termosoldados y equipamiento completo.",
+                img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=80"
+            },
+            {
+                title: "Quirófano de Alta Especialidad y CEYE",
+                tag: "Infraestructura Crítica",
+                desc: "Acabado epóxico tono Sábila, lámpara quirúrgica LED doble satélite, mesa electrohidráulica y red de gases.",
+                img: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=900&q=80"
+            },
+            {
+                title: "Aulas y Laboratorios Escolares Integrales",
+                tag: "Infraestructura Educativa",
+                desc: "Construcción de aulas didácticas, iluminación LED normativa, mobiliario escolar y laboratorios equipados.",
+                img: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=900&q=80"
+            },
+            {
+                title: "Área de Hospitalización y Cuidados",
+                tag: "Equipamiento Médico",
+                desc: "Camas eléctricas de 3 posiciones, consolas de gases medicinales, monitoreo multiparámetro y señalética Kiosko.",
+                img: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=900&q=80"
+            },
+            {
+                title: "Laboratorio de Análisis Clínicos",
+                tag: "Diagnóstico e Imagen",
+                desc: "Cubiertas fenólicas sanitarias, mobiliario en acero inoxidable AISI 304 y equipos analíticos certificados.",
+                img: "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=900&q=80"
+            },
+            {
+                title: "Rehabilitación de Fachadas Institucionales",
+                tag: "Obra Civil Integral",
+                desc: "Impermeabilización, cancelería de aluminio, accesibilidad universal y pintura institucional de alta durabilidad.",
+                img: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=900&q=80"
+            }
+        ];
+
+        // Estado global de filtros y cotización
+        let activeCategory = "Todas";
+        let quoteCart = [];
+
+        // Inicialización al cargar la página
+        document.addEventListener("DOMContentLoaded", () => {
+            renderCategoryFilters();
+            renderCatalog(catalogData);
+            renderGallery();
+            renderQuoteDrawer();
+            lucide.createIcons();
+        });
+
+        // Renderizar píldoras de categorías
+        function renderCategoryFilters() {
+            const container = document.getElementById("category-filters");
+            const categories = ["Todas", ...new Set(catalogData.map(item => item.category))];
+
+            container.innerHTML = categories.map(cat => {
+                const isActive = cat === activeCategory;
+                return `
+                    <button onclick="selectCategory('${cat}')"
+                        class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                            isActive
+                            ? 'bg-[#0A192F] text-white shadow-sm'
+                            : 'bg-white text-slate-600 border border-slate-200 hover:border-sky-400 hover:text-slate-900'
+                        }">
+                        ${cat}
+                    </button>
+                `;
+            }).join("");
+        }
+
+        function selectCategory(category) {
+            activeCategory = category;
+            renderCategoryFilters();
+            filterCatalog();
+        }
+
+        function clearSearch() {
+            document.getElementById("catalog-search").value = "";
+            document.getElementById("clear-search-btn").classList.add("hidden");
+            filterCatalog();
+        }
+
+        function resetFilters() {
+            activeCategory = "Todas";
+            document.getElementById("catalog-search").value = "";
+            document.getElementById("clear-search-btn").classList.add("hidden");
+            renderCategoryFilters();
+            filterCatalog();
+        }
+
+        // Filtrado en tiempo real por texto y especialidad
+        function filterCatalog() {
+            const searchInput = document.getElementById("catalog-search");
+            const query = searchInput.value.trim().toLowerCase();
+            const clearBtn = document.getElementById("clear-search-btn");
+
+            if (query.length > 0) {
+                clearBtn.classList.remove("hidden");
+            } else {
+                clearBtn.classList.add("hidden");
+            }
+
+            const filtered = catalogData.filter(item => {
+                const matchCategory = activeCategory === "Todas" || item.category === activeCategory;
+                const matchText =
+                    item.name.toLowerCase().includes(query) ||
+                    item.id.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query) ||
+                    item.desc.toLowerCase().includes(query);
+                return matchCategory && matchText;
+            });
+
+            renderCatalog(filtered);
+        }
+
+        // Renderizar tarjetas del catálogo
+        function renderCatalog(items) {
+            const grid = document.getElementById("catalog-grid");
+            const empty = document.getElementById("catalog-empty");
+            const countLabel = document.getElementById("catalog-count");
+
+            countLabel.textContent = `Mostrando ${items.length} de ${catalogData.length} equipos disponibles`;
+
+            if (items.length === 0) {
+                grid.innerHTML = "";
+                empty.classList.remove("hidden");
+                lucide.createIcons();
+                return;
+            }
+
+            empty.classList.add("hidden");
+            grid.innerHTML = items.map(item => `
+                <article class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:shadow-lg hover:border-sky-300 transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-mono text-[11px] font-bold">
+                                ${item.id}
+                            </span>
+                            <span class="text-[11px] font-semibold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full truncate max-w-[160px]">
+                                ${item.category}
+                            </span>
+                        </div>
+                        <h3 class="font-display font-bold text-base text-slate-900 group-hover:text-sky-700 transition-colors leading-snug">
+                            ${item.name}
+                        </h3>
+                        <p class="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">
+                            ${item.desc}
+                        </p>
+                    </div>
+
+                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center gap-2">
+                        <button onclick="openSpecModal('${item.id}')"
+                            class="flex-1 py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+                            <i data-lucide="file-text" class="w-3.5 h-3.5 text-slate-600"></i>
+                            Ficha Técnica
+                        </button>
+                        <button onclick="addToQuote('${item.id}')"
+                            class="py-2 px-3 rounded-xl bg-[#0A192F] hover:bg-sky-600 text-white text-xs font-semibold transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                            title="Agregar a cotización">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            Cotizar
+                        </button>
+                    </div>
+                </article>
+            `).join("");
+
+            lucide.createIcons();
+        }
+
+        // Modal de Ficha Técnica
+        function openSpecModal(id) {
+            const item = catalogData.find(p => p.id === id);
+            if (!item) return;
+
+            document.getElementById("modal-code").textContent = item.id;
+            document.getElementById("modal-category").textContent = item.category;
+            document.getElementById("modal-title").textContent = item.name;
+            document.getElementById("modal-desc").textContent = item.desc;
+            document.getElementById("modal-norm").textContent = item.norm;
+
+            const specsList = document.getElementById("modal-specs");
+            specsList.innerHTML = item.specs.map(s => `
+                <li class="flex items-start gap-2">
+                    <i data-lucide="check" class="w-4 h-4 text-sky-600 shrink-0 mt-0.5"></i>
+                    <span>${s}</span>
+                </li>
+            `).join("");
+
+            const addBtn = document.getElementById("modal-add-btn");
+            addBtn.onclick = () => {
+                addToQuote(item.id);
+                closeSpecModal();
+            };
+
+            const modal = document.getElementById("spec-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            lucide.createIcons();
+        }
+
+        function closeSpecModal() {
+            const modal = document.getElementById("spec-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+
+        // Galería Arquitectónica y Lightbox
+        function renderGallery() {
+            const grid = document.getElementById("gallery-grid");
+            grid.innerHTML = galleryItems.map((g, idx) => `
+                <div onclick="openLightbox(${idx})" class="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-sm cursor-pointer aspect-[4/3]">
+                    <img src="${g.img}"
+                         alt="${g.title}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+                         onerror="this.onerror=null; this.src='https://placehold.co/800x600/0A192F/38BDF8?text=COCOX+Obra+Institucional';">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent flex flex-col justify-end p-5">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-sky-400">${g.tag}</span>
+                        <h3 class="font-display font-bold text-lg text-white mt-0.5 leading-snug">${g.title}</h3>
+                        <p class="text-xs text-slate-300 mt-1 line-clamp-2">${g.desc}</p>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function openLightbox(index) {
+            const g = galleryItems[index];
+            document.getElementById("lightbox-img").src = g.img;
+            document.getElementById("lightbox-tag").textContent = g.tag;
+            document.getElementById("lightbox-title").textContent = g.title;
+            document.getElementById("lightbox-desc").textContent = g.desc;
+
+            const lb = document.getElementById("lightbox-modal");
+            lb.classList.remove("hidden");
+            lb.classList.add("flex");
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById("lightbox-modal");
+            lb.classList.add("hidden");
+            lb.classList.remove("flex");
+        }
+
+        // Gestión del Cajón de Cotización
+        function toggleQuoteDrawer(open) {
+            const drawer = document.getElementById("quote-drawer");
+            const backdrop = document.getElementById("quote-drawer-backdrop");
+            if (open) {
+                backdrop.classList.remove("hidden");
+                drawer.classList.remove("translate-x-full");
+            } else {
+                backdrop.classList.add("hidden");
+                drawer.classList.add("translate-x-full");
+            }
+        }
+
+        function addToQuote(id) {
+            const item = catalogData.find(p => p.id === id);
+            if (!item) return;
+
+            const existing = quoteCart.find(c => c.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                quoteCart.push({
+                    id: item.id,
+                    name: item.name,
+                    category: item.category,
+                    qty: 1
+                });
+            }
+            renderQuoteDrawer();
+            showToast(`Agregado: ${item.name}`);
+        }
+
+        function addPaintToQuote(paintDesc) {
+            const customId = "PNT-" + Math.floor(100 + Math.random() * 899);
+            const existing = quoteCart.find(c => c.name === paintDesc);
+            if (existing) {
+                existing.qty += 10;
+            } else {
+                quoteCart.push({
+                    id: customId,
+                    name: paintDesc,
+                    category: "Acabados e Infraestructura",
+                    qty: 10
+                });
+            }
+            renderQuoteDrawer();
+            toggleQuoteDrawer(true);
+            showToast("Partida de pintura agregada (10 m² base)");
+        }
+
+        function updateQuoteQty(id, delta) {
+            const idx = quoteCart.findIndex(c => c.id === id);
+            if (idx === -1) return;
+
+            quoteCart[idx].qty += delta;
+            if (quoteCart[idx].qty <= 0) {
+                quoteCart.splice(idx, 1);
+            }
+            renderQuoteDrawer();
+        }
+
+        function clearQuote() {
+            quoteCart = [];
+            renderQuoteDrawer();
+            showToast("Lista de cotización vaciada");
+        }
+
+        function renderQuoteDrawer() {
+            const container = document.getElementById("quote-items-list");
+            const badge = document.getElementById("quote-badge");
+            const totalUnits = document.getElementById("quote-total-units");
+
+            const sumUnits = quoteCart.reduce((acc, item) => acc + item.qty, 0);
+            badge.textContent = sumUnits;
+            totalUnits.textContent = `${sumUnits} ${sumUnits === 1 ? 'unidad' : 'unidades'}`;
+
+            if (quoteCart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center py-12 text-slate-400">
+                        <i data-lucide="clipboard" class="w-12 h-12 mb-3 text-slate-300"></i>
+                        <p class="font-semibold text-slate-600 text-sm">Su cotizador está vacío</p>
+                        <p class="text-xs mt-1 max-w-xs">Seleccione equipos médicos, mobiliario escolar o partidas de pintura del catálogo para armar su requisición.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            container.innerHTML = quoteCart.map(item => `
+                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700">${item.id}</span>
+                            <span class="text-[10px] text-sky-700 font-semibold truncate">${item.category}</span>
+                        </div>
+                        <h4 class="font-bold text-xs text-slate-900 mt-1 leading-snug">${item.name}</h4>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button onclick="updateQuoteQty('${item.id}', -1)" class="w-7 h-7 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 flex items-center justify-center text-slate-700 font-bold text-sm cursor-pointer">-</button>
+                        <span class="w-7 text-center text-xs font-bold text-slate-900">${item.qty}</span>
+                        <button onclick="updateQuoteQty('${item.id}', 1)" class="w-7 h-7 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 flex items-center justify-center text-slate-700 font-bold text-sm cursor-pointer">+</button>
+                    </div>
+                </div>
+            `).join("");
+
+            lucide.createIcons();
+        }
+
+        // Generar texto formateado de cotización
+        function buildQuoteText() {
+            const client = document.getElementById("quote-client-name").value.trim() || "Institución / Cliente Por Definir";
+            const location = document.getElementById("quote-client-location").value.trim() || "Ubicación Por Definir";
+            const dateStr = new Date().toLocaleDateString("es-MX", { year: 'numeric', month: 'long', day: 'numeric' });
+
+            let text = `====================================================================\n`;
+            text += `COMERCIALIZADORA Y CONSTRUCTORA XICOTÉPETL S.A. DE C.V. (COCOX)\n`;
+            text += `Construcción y Equipamiento Integral para Clínicas, Hospitales y Escuelas\n`;
+            text += `Dirección: Boulevard Benito Juárez 238, Xicotepec de Juárez, Puebla.\n`;
+            text += `Teléfonos: 775 163 42 63 / 764 103 78 09\n`;
+            text += `Correo: conscomxicotec@outlook.com\n`;
+            text += `====================================================================\n\n`;
+            text += `SOLICITUD DE COTIZACIÓN INSTITUCIONAL\n`;
+            text += `Fecha: ${dateStr}\n`;
+            text += `Institución / Solicitante: ${client}\n`;
+            text += `Ubicación del Proyecto: ${location}\n\n`;
+            text += `PARTIDAS REQUERIDAS:\n`;
+            text += `--------------------------------------------------------------------\n`;
+
+            quoteCart.forEach((item, index) => {
+                text += `${index + 1}. [${item.id}] ${item.name}\n`;
+                text += ` Especialidad: ${item.category} | Cantidad: ${item.qty}\n`;
+            });
+
+            text += `--------------------------------------------------------------------\n`;
+            const totalUnits = quoteCart.reduce((acc, i) => acc + i.qty, 0);
+            text += `TOTAL DE PARTIDAS: ${quoteCart.length} | TOTAL DE UNIDADES: ${totalUnits}\n\n`;
+            text += `Nota: Precios unitarios, tiempos de entrega e instalación sujetos a formalización técnica de COCOX.\n`;
+
+            return text;
+        }
+
+        // Descargar archivo .TXT
+        function downloadQuoteTxt() {
+            if (quoteCart.length === 0) {
+                showToast("Agregue al menos un equipo para descargar la cotización");
+                return;
+            }
+            const content = buildQuoteText();
+            const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `Cotizacion_COCOX_${new Date().toISOString().slice(0,10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("Archivo .TXT descargado correctamente");
+        }
+
+        // Enviar Cotización por WhatsApp
+        function sendQuoteWhatsApp() {
+            if (quoteCart.length === 0) {
+                showToast("Agregue al menos un equipo antes de enviar por WhatsApp");
+                return;
+            }
+            const client = document.getElementById("quote-client-name").value.trim() || "Cliente Institucional";
+            const location = document.getElementById("quote-client-location").value.trim() || "No especificada";
+
+            let msg = `Hola *COCOX*, solicito cotización formal para:\n`;
+            msg += `*Institución:* ${client}\n`;
+            msg += `*Ubicación:* ${location}\n\n`;
+            msg += `*Partidas seleccionadas:*\n`;
+            quoteCart.forEach((item, idx) => {
+                msg += `${idx + 1}. (${item.qty}x) [${item.id}] ${item.name}\n`;
+            });
+            msg += `\nQuedo atento a su propuesta técnica y económica.`;
+
+            const phone = "527751634263";
+            const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            window.open(waUrl, "_blank");
+        }
+
+        // Formulario de contacto -> Abre cliente de correo institucional
+        function submitContactForm(e) {
+            e.preventDefault();
+            const name = document.getElementById("contact-name").value.trim();
+            const org = document.getElementById("contact-org").value.trim();
+            const phone = document.getElementById("contact-phone").value.trim();
+            const type = document.getElementById("contact-type").value;
+            const msg = document.getElementById("contact-msg").value.trim();
+
+            const subject = `Solicitud COCOX: ${type} - ${org}`;
+            const body = `Nombre: ${name}\nInstitución: ${org}\nTeléfono: ${phone}\nTipo de Requerimiento: ${type}\n\nDetalles del Proyecto:\n${msg}`;
+
+            window.location.href = `mailto:conscomxicotec@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            showToast("Abriendo correo hacia conscomxicotec@outlook.com");
+        }
+
+        // Copiar correo al portapapeles
+        function copyEmail() {
+            const tempInput = document.createElement("input");
+            tempInput.value = "conscomxicotec@outlook.com";
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            showToast("Correo copiado: conscomxicotec@outlook.com");
+        }
+
+        // Menú Móvil
+        function toggleMobileMenu() {
+            const menu = document.getElementById("mobile-menu");
+            menu.classList.toggle("hidden");
+        }
+
+        // Notificación flotante Toast
+        let toastTimeout;
+        function showToast(message) {
+            const box = document.getElementById("toast-box");
+            const msg = document.getElementById("toast-msg");
+            msg.textContent = message;
+            box.classList.remove("hidden");
+            box.classList.add("flex");
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                box.classList.add("hidden");
+                box.classList.remove("flex");
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
